@@ -1,0 +1,24 @@
+{
+  "name": "engine-ts",
+  "version": "0.0.1",
+  "description": "TypeScript Canvas Engine",
+  "main": "./src/index.ts",
+  "author": "Sergey Gromov <sendtogromov@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start:dev": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.0.2",
+    "html-webpack-plugin": "^4.3.0",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
