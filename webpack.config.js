@@ -28,7 +28,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [{
-        from: './src/static/sprites',
+        from: './src/scenes/sprites',
         to: 'sprites'
       }, ],
     }),
