@@ -30,10 +30,12 @@ class Polygon {
     size: Point;
     color: string = 'red';
     isFill: Boolean;
+    isStroke: Boolean;
     sprite ? : Sprite;
 
     constructor(points: Point[], isFill: Boolean = false) {
         this.isFill = isFill;
+        this.isStroke = true;
 
         this.points = new PointsList();
         points.map(point => this.points.add(point));

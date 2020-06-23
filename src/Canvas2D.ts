@@ -7,28 +7,30 @@ class Canvas2D {
     context: any;
     background: Polygon;
     camera: Camera2D;
+    size: Point;
     
     constructor() {
         const width = 512;
         const height = 480;
-        const size = new Point(width, height);
+        this.size = new Point(width, height);
 
         this.element = document.getElementById('canvas');
-        this.element.width = size.x;
-        this.element.height = size.y;
+        this.element.width = this.size.x;
+        this.element.height = this.size.y;
 
         this.context = this.element.getContext("2d");
         this.context.strokeStyle = 'white';
 
         this.background = new Polygon([
             new Point(0, 0),
-            new Point(size.x, 0),
-            new Point(size.x, size.y),
-            new Point(0, size.y)
+            new Point(this.size.x, 0),
+            new Point(this.size.x, this.size.y),
+            new Point(0, this.size.y)
         ], true);
         this.background.setColor('black');
 
         this.camera = new Camera2D('main');
+        // this.camera.position = new Point(size.x / 2, size.y / 2);
     }
 
     renderPolygon(polygon: Polygon, position: Point = new Point(0, 0)) {
@@ -52,7 +54,9 @@ class Canvas2D {
             this.context.drawImage(polygon.sprite.image, position.x, position.y, polygon.size.x, polygon.size.y);
         };
 
-        this.context.stroke();
+        if(polygon.isStroke){
+            this.context.stroke();
+        }
     }
 
     renderBackground(){

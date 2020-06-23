@@ -1,8 +1,10 @@
 import { Canvas2D } from './Canvas2D';
 import { ScenesList } from './Scenes';
 import { Control } from './Control';
+import { Point } from './Geometry2D';
 
 import { dummyScene } from './scenes/dummy';
+import { axisScene, drawAxisX, drawAxisY } from './scenes/axis';
 
 class Game {
     canvas: Canvas2D;
@@ -16,12 +18,30 @@ class Game {
 
         this.control.listener();
 
-        this.scenes.addScene(dummyScene);
+        // this.scenes.addScene(dummyScene);
+        this.scenes.addScene(axisScene);
+        drawAxisX(this.canvas.size);
+        drawAxisY(this.canvas.size);
     }
 
     loop(){
         this.canvas.renderBackground();
 
+        if (this.control.keyboard.up.state) {
+            this.canvas.camera.position.move(new Point(0, 1));
+        }
+
+        if (this.control.keyboard.down.state) {
+            this.canvas.camera.position.move(new Point(0, -1));
+        }
+
+        if (this.control.keyboard.left.state) {
+            this.canvas.camera.position.move(new Point(1, 0));
+        }
+
+        if (this.control.keyboard.right.state) {
+            this.canvas.camera.position.move(new Point(-1, 0));
+        }
 
         /* 
         Рендер всех объектов в сцене
@@ -31,8 +51,14 @@ class Game {
             * подумать: в SceneList.active хранить номер сцены или ссылку на сцену
             * метод renderPolygon или renderObject ?
         */
+
         this.scenes.list[this.scenes.active].objects.list.map(object => {
-            this.canvas.renderPolygon(object.polygon, object.position);
+            const renderPosition = new Point(
+                object.position.x + this.canvas.camera.position.x,
+                object.position.y + this.canvas.camera.position.y
+            );
+
+            this.canvas.renderPolygon(object.polygon, renderPosition);
         });
     }
 }

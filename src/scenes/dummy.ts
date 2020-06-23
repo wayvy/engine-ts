@@ -6,7 +6,7 @@ import boxImage from './sprites/boxes/box.png'
 
 const dummyScene = new Scene('street');
 
-const rectangleArray = (size: number) => [
+const squareArray = (size: number) => [
     [0, 0],
     [0, size],
     [size, size],
@@ -14,26 +14,24 @@ const rectangleArray = (size: number) => [
 ];
 
 for (let i = 0; i < 4; i++) {
-    const rectangleSize = 64;
+    const squareSize = 64;
 
-    const rectanglePoints = [...rectangleArray(rectangleSize).map(xy => {
+    const squarePointsGenerator = [...squareArray(squareSize).map(xy => {
         return new Point(xy[0], xy[1]);
     })];
 
-    const rectangle = new Polygon(rectanglePoints);
-
-
+    const square = new Polygon(squarePointsGenerator);
 
     const boxSprite = new Image();
     boxSprite.src = boxImage;
-    rectangle.setSprite(boxSprite);
+    square.setSprite(boxSprite);
 
-    const rectangleObject = new GameObject(rectangle, `r-${i}`);
+    const squareObject = new GameObject(square, `s-${i}`);
 
-    const newRectanglePosition = new Point(rectangleSize * i, 0);
-    rectangleObject.move(newRectanglePosition);
+    const newSquarePosition = new Point(squareSize * i, 0);
+    squareObject.move(newSquarePosition);
 
-    dummyScene.addObject(rectangleObject);
+    dummyScene.addObject(squareObject);
 }
 
 export { dummyScene };

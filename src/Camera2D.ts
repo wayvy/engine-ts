@@ -8,6 +8,9 @@ class Camera2D {
         this.name = name;
         this.position = new Point(0, 0);
     }
+    move(distance: Point){
+        this.position.move(distance);
+    }
 }
 
 export { Camera2D };
