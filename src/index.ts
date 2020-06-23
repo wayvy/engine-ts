@@ -1,5 +1,5 @@
-import main from './main';
+import { Main } from './Main';
 
 document.addEventListener('DOMContentLoaded', () => {
-    main();
+    const main = new Main();
 });

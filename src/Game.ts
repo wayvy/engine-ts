@@ -17,30 +17,31 @@ class Game {
         this.control = new Control();
 
         this.control.listener();
-
         // this.scenes.addScene(dummyScene);
         this.scenes.addScene(axisScene);
         drawAxisX(this.canvas.size);
         drawAxisY(this.canvas.size);
+
+        this.loop();
     }
 
     loop(){
         this.canvas.renderBackground();
 
         if (this.control.keyboard.up.state) {
-            this.canvas.camera.position.move(new Point(0, 1));
+            this.canvas.camera.position.move(new Point(0, 5));
         }
 
         if (this.control.keyboard.down.state) {
-            this.canvas.camera.position.move(new Point(0, -1));
+            this.canvas.camera.position.move(new Point(0, -5));
         }
 
         if (this.control.keyboard.left.state) {
-            this.canvas.camera.position.move(new Point(1, 0));
+            this.canvas.camera.position.move(new Point(5, 0));
         }
 
         if (this.control.keyboard.right.state) {
-            this.canvas.camera.position.move(new Point(-1, 0));
+            this.canvas.camera.position.move(new Point(-5, 0));
         }
 
         /* 
@@ -60,6 +61,9 @@ class Game {
 
             this.canvas.renderPolygon(object.polygon, renderPosition);
         });
+
+        requestAnimationFrame(this.loop.bind(this));
+
     }
 }
 
