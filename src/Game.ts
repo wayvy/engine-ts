@@ -4,7 +4,7 @@ import { Control } from './Control';
 import { Point } from './Geometry2D';
 
 import { dummyScene } from './scenes/dummy';
-import { axisScene, drawAxisX, drawAxisY } from './scenes/axis';
+// import { axisScene, drawAxisX, drawAxisY } from './scenes/axis';
 
 class Game {
     canvas: Canvas2D;
@@ -17,15 +17,13 @@ class Game {
         this.control = new Control();
 
         this.control.listener();
-        // this.scenes.addScene(dummyScene);
-        this.scenes.addScene(axisScene);
-        drawAxisX(this.canvas.size);
-        drawAxisY(this.canvas.size);
-
+        // this.scenes.addScene(videoScene);
+        this.scenes.addScene(dummyScene);
+    
         this.loop();
     }
 
-    loop(){
+    loop() {
         this.canvas.renderBackground();
 
         if (this.control.keyboard.up.state) {
@@ -61,7 +59,6 @@ class Game {
 
             this.canvas.renderPolygon(object.polygon, renderPosition);
         });
-
         requestAnimationFrame(this.loop.bind(this));
 
     }

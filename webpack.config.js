@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  devtool: "source-map",
   entry: './src/index.ts',
   module: {
     rules: [{
@@ -14,12 +15,11 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|jp2|webp)$/,
         loader: 'file-loader',
-
       }
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
   output: {
     filename: 'bundle.js',
@@ -37,7 +37,6 @@ module.exports = {
       template: './html/index.html'
     })
   ],
-  devtool: 'inline-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     hot: true,

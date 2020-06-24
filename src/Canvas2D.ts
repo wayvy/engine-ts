@@ -10,7 +10,7 @@ class Canvas2D {
     size: Point;
     
     constructor() {
-        const width = 512;
+        const width = 650;
         const height = 480;
         this.size = new Point(width, height);
 

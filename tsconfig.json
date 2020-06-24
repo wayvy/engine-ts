@@ -9,6 +9,9 @@
     "outDir": "./dist",
     "sourceMap": true,
     "allowJs": true,
+    "jsx": "react",
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "./src",
