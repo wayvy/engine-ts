@@ -19,8 +19,8 @@ const drawAxisY = (canvasSize: Point) => {
     })];
     
     const rectangle = new Polygon(rectanglePointsGenerator, true);
-    rectangle.color = '#9EFF4B';
-    rectangle.isStroke = false;
+    rectangle.style.color = '#9EFF4B';
+    rectangle.style.stroke = false;
 
     const rectangleObject = new GameObject(rectangle, `axis-y`);
     
@@ -35,8 +35,8 @@ const drawAxisX = (canvasSize: Point) => {
     })];
     
     const rectangle = new Polygon(rectanglePointsGenerator, true);
-    rectangle.color = '#FF2136';
-    rectangle.isStroke = false;
+    rectangle.style.color = '#FF2136';
+    rectangle.style.stroke = false;
 
     const rectangleObject = new GameObject(rectangle, `axis-x`);
     

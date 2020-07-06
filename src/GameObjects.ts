@@ -24,7 +24,8 @@ class GameObject {
     }
 
     move(position: Point){
-        this.position = position;
+        this.position.x = this.position.x + position.x;
+        this.position.y = this.position.y + position.y;
     }
 }
 

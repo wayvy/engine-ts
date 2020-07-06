@@ -27,10 +27,9 @@ class Canvas2D {
             new Point(this.size.x, this.size.y),
             new Point(0, this.size.y)
         ], true);
-        this.background.setColor('black');
+        this.background.style.color = 'black';
 
         this.camera = new Camera2D('main');
-        // this.camera.position = new Point(size.x / 2, size.y / 2);
     }
 
     renderPolygon(polygon: Polygon, position: Point = new Point(0, 0)) {
@@ -45,8 +44,8 @@ class Canvas2D {
 
         this.context.closePath();
     
-        if (polygon.isFill) {
-            this.context.fillStyle = polygon.color;
+        if (polygon.style.fill) {
+            this.context.fillStyle = polygon.style.color;
             this.context.fill();
         }
 
@@ -54,7 +53,7 @@ class Canvas2D {
             this.context.drawImage(polygon.sprite.image, position.x, position.y, polygon.size.x, polygon.size.y);
         };
 
-        if(polygon.isStroke){
+        if(polygon.style.stroke){
             this.context.stroke();
         }
     }

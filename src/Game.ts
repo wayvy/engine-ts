@@ -4,7 +4,7 @@ import { Control } from './Control';
 import { Point } from './Geometry2D';
 
 import { dummyScene } from './scenes/dummy';
-// import { axisScene, drawAxisX, drawAxisY } from './scenes/axis';
+import { axisScene, drawAxisX, drawAxisY } from './scenes/axis';
 
 class Game {
     canvas: Canvas2D;
@@ -27,18 +27,23 @@ class Game {
         this.canvas.renderBackground();
 
         if (this.control.keyboard.up.state) {
+            this.scenes.list[this.scenes.active].objects.list[5].move(new Point(0,-5));
             this.canvas.camera.position.move(new Point(0, 5));
         }
 
         if (this.control.keyboard.down.state) {
+            this.scenes.list[this.scenes.active].objects.list[5].move(new Point(0,5));
             this.canvas.camera.position.move(new Point(0, -5));
         }
 
         if (this.control.keyboard.left.state) {
+            this.scenes.list[this.scenes.active].objects.list[5].move(new Point(-5,0));
             this.canvas.camera.position.move(new Point(5, 0));
+
         }
 
         if (this.control.keyboard.right.state) {
+            this.scenes.list[this.scenes.active].objects.list[5].move(new Point(5,0));
             this.canvas.camera.position.move(new Point(-5, 0));
         }
 
