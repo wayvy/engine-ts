@@ -21,16 +21,16 @@ module.exports = {
       }
     ],
   },
-  resolve: { extensions: ['.ts'] },
+  resolve: { extensions: ['.ts', '.js'] },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './html/index.html'
-    }),
-    new CleanWebpackPlugin()
+    })
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
