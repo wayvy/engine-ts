@@ -1,4 +1,4 @@
-import { Point, Polygon } from '../../Geometry2D';
+import { Point, Rectangle } from '../../Geometry2D';
 import { GameObject, Sprite } from '../../GameObjects';
 
 import playerImageIdleSrc0 from '../sprites/player/player-idle-0.png';
@@ -16,7 +16,7 @@ const squareSize = 64;
 const squarePointsGenerator = [ ...squarePoints(squareSize).map(xy => {
     return new Point(xy[0], xy[1]);
 })];
-const playerPolygon = new Polygon(squarePointsGenerator, true);
+const playerPolygon = new Rectangle(squarePointsGenerator, true);
 playerPolygon.size = new Point(squareSize, squareSize);
 playerPolygon.style.color = 'green';
 playerPolygon.style.stroke = false;

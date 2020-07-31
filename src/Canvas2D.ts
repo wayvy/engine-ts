@@ -5,7 +5,6 @@ import { GameObject } from './GameObjects';
 class Canvas2D {
     element: any;
     context: any;
-    // background: Polygon;
     camera: Camera2D;
     size: Point;
     
@@ -31,7 +30,7 @@ class Canvas2D {
     }
 
     renderObject(object: GameObject, position: Point = new Point(0, 0)) {
-        object.polygon.points.list.map((point, i) => {
+        object.figure.points.list.map((point, i) => {
             if (i === 0) {
                 this.context.beginPath();
                 this.context.moveTo(point.x + position.x, point.y + position.y);
@@ -41,14 +40,14 @@ class Canvas2D {
         });
         this.context.closePath();
     
-        if (object.polygon.style.fill) {
-            this.context.fillStyle = object.polygon.style.color;
+        if (object.figure.style.fill) {
+            this.context.fillStyle = object.figure.style.color;
             this.context.fill();
         }
 
-        this.context.drawImage(object.activeSprite?.image, position.x, position.y, object.polygon.size.x, object.polygon.size.y);
+        this.context.drawImage(object.activeSprite?.image, position.x, position.y, object.figure.size.x, object.figure.size.y);
 
-        if(object.polygon.style.stroke){
+        if(object.figure.style.stroke){
             this.context.stroke();
         }
     }

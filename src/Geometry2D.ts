@@ -1,3 +1,5 @@
+import { List } from './List';
+
 class Point {
     x: number;
     y: number;
@@ -13,13 +15,15 @@ class Point {
     }
 }
 
-class PointsList {
-    list: Point[] = [];
+// class PointsList {
+//     list: Point[] = [];
 
-    add(point: Point) {
-        this.list.push(point);
-    }
-}
+//     add(point: Point) {
+//         this.list.push(point);
+//     }
+// }
+
+class PointsList extends List<Point>{}
 
 class PolygonStyle {
     fill: Boolean;
@@ -33,20 +37,26 @@ class PolygonStyle {
 
 class Polygon {
     points: PointsList = new PointsList();
-    size: Point;
     style: PolygonStyle;
     angle: number = 0;
+    size: Point;
 
     constructor(points: Point[], isFill: Boolean = false) {
         this.style = new PolygonStyle(isFill);
-        points.map(point => this.points.add(point)); // ?
-        this.size = this.calculateSize();
-    }
-
-    calculateSize(){
-        /* TODO */
-        return new Point(64, 64);
+        points.map(point => this.points.add(point));
+        this.size = new Point(0, 0);
     }
 }
 
-export { Point, Polygon }
+class Rectangle extends Polygon{
+    size: Point;
+    constructor(points: Point[], isFill: Boolean = false){
+        super(points, isFill);
+        this.size = new Point(
+            this.points.list[1].x - this.points.list[0].x,
+            this.points.list[3].y - this.points.list[0].y
+        );
+    }
+}
+
+export { Point, Polygon, Rectangle }

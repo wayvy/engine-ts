@@ -1,4 +1,4 @@
-import { Point, Polygon } from '../../Geometry2D';
+import { Point, Rectangle } from '../../Geometry2D';
 import { GameObject, Sprite } from '../../GameObjects';
 
 import skyImageSrc from '../sprites/sky/sky-00.png';
@@ -14,9 +14,11 @@ const squareSize = 2048;
 const squarePointsGenerator = [ ...squarePoints(squareSize).map(xy => {
     return new Point(xy[0], xy[1]);
 })];
-const skyPolygon = new Polygon(squarePointsGenerator);
+const skyPolygon = new Rectangle(squarePointsGenerator);
 skyPolygon.size = new Point(squareSize, squareSize);
-skyPolygon.style.stroke = false;
+skyPolygon.style.stroke = true;
+skyPolygon.style.color = 'pink';
+skyPolygon.style.fill = true;
 
 const skyImage = new Image();
 skyImage.src = skyImageSrc;

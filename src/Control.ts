@@ -47,6 +47,16 @@ class Control {
             this.object?.move(new Point(distance,0));
             this.camera?.position.move(new Point(-distance, 0));
         }
+
+        // if (this.keyboard.up.state) {
+        //     this.camera?.position.move(new Point(0, distance));
+        //     this.object?.move(new Point(0, -distance));
+        // }
+
+        // if (this.keyboard.down.state) {
+        //     this.object?.move(new Point(0, distance));
+        //     this.camera?.position.move(new Point(0, -distance));
+        // }
     }
 
     listener() {

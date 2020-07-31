@@ -1,23 +1,34 @@
-import { Polygon, Point } from "./Geometry2D";
+import { Rectangle, Polygon, Point } from "./Geometry2D";
+import { Physics } from "./Physics";
+import { EventsList } from "./Events";
+import { List } from "./List";
 
-class GameObjectsList {
-    list: GameObject[] = [];
-    
-    addObject(object: GameObject) {
-        this.list.push(object);
+const physics = new Physics();
+
+class GameObjectsList extends List<GameObject>{
+    // addObject(object: GameObject) {
+    //     this.list.push(object);
+    // }
+    collider(player: GameObject){
+        this.list.map(object => {
+            if(object.name !== player.name && object.name !== 'sky-0'){
+                physics.isRectangleObjectsCollide(player, object);
+            }
+        });
     }
 }
 
+
 class GameObject {
     name: string;
-    polygon: Polygon;
+    figure: Polygon;
     position: Point;
     activeSprite ? : Sprite;
     spriteList ? : SpriteList;
-    size ? : Point;
+    events: EventsList = new EventsList();
     
-    constructor(polygon: Polygon, name: string) {
-        this.polygon = polygon;
+    constructor(figure: Polygon | Rectangle, name: string) {
+        this.figure = figure;
         this.name = name;
         this.position = new Point(0, 0);
     }

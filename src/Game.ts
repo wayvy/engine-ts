@@ -13,7 +13,8 @@ class Game {
 
     constructor() {
         const playerSize = 64;
-        const playerPosition = new Point(this.canvas.size.x / 2 - playerSize / 2, this.canvas.size.y - playerObject.polygon.size.y);
+        const playerPosition = new Point(this.canvas.size.x / 2 - playerSize / 2, this.canvas.size.y - playerObject.figure.size.y);
+        // const playerPosition = new Point(0, this.canvas.size.y - playerObject.figure.size.y);
         playerObject.move(playerPosition);
         demoScene.addObject(playerObject);
         this.control = new Control(playerObject, this.canvas.camera);
@@ -39,6 +40,7 @@ class Game {
         this.render();
         requestAnimationFrame(() => this.loop());
         this.control.action();
+        this.scenes.active.objects.collider(this.scenes.active.objects.list[this.scenes.active.objects.list.length - 1]);
     }
 }
 

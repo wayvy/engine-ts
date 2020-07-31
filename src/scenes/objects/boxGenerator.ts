@@ -1,4 +1,4 @@
-import { Point, Polygon } from "../../Geometry2D";
+import { Point, Rectangle } from "../../Geometry2D";
 import { Sprite, GameObject } from "../../GameObjects";
 import { Scene } from "../../Scenes";
 
@@ -20,7 +20,7 @@ const boxGenerator = (scene: Scene, size: Point, position: Point) => {
                 })
             ];
         
-            const square = new Polygon(squarePointsGenerator, true);
+            const square = new Rectangle(squarePointsGenerator, true);
             square.size = new Point(size, size);
             square.style.stroke = false;
         
