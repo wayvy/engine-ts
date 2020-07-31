@@ -15,14 +15,6 @@ class Point {
     }
 }
 
-// class PointsList {
-//     list: Point[] = [];
-
-//     add(point: Point) {
-//         this.list.push(point);
-//     }
-// }
-
 class PointsList extends List<Point>{}
 
 class PolygonStyle {
