@@ -5,7 +5,7 @@ import { GameObject } from './GameObjects';
 class Canvas2D {
     element: any;
     context: any;
-    background: Polygon;
+    // background: Polygon;
     camera: Camera2D;
     size: Point;
     
@@ -14,6 +14,11 @@ class Canvas2D {
         const height = 480;
         this.size = new Point(width, height);
 
+        const canvasContainer: HTMLElement | null = document.getElementById('canvas-container');
+        if(canvasContainer != null){
+            this.size = new Point(canvasContainer.offsetWidth, canvasContainer.offsetHeight);
+        }
+
         this.element = document.getElementById('canvas');
         this.element.width = this.size.x;
         this.element.height = this.size.y;
@@ -21,19 +26,12 @@ class Canvas2D {
         this.context = this.element.getContext("2d");
         this.context.strokeStyle = 'white';
 
-        this.background = new Polygon([
-            new Point(0, 0),
-            new Point(this.size.x, 0),
-            new Point(this.size.x, this.size.y),
-            new Point(0, this.size.y)
-        ], true);
-        this.background.style.color = 'black';
-
+       
         this.camera = new Camera2D('main');
     }
 
-    renderPolygon(polygon: Polygon, position: Point = new Point(0, 0)) {
-        polygon.points.list.map((point, i) => {
+    renderObject(object: GameObject, position: Point = new Point(0, 0)) {
+        object.polygon.points.list.map((point, i) => {
             if (i === 0) {
                 this.context.beginPath();
                 this.context.moveTo(point.x + position.x, point.y + position.y);
@@ -41,25 +39,18 @@ class Canvas2D {
                 this.context.lineTo(point.x + position.x, point.y + position.y);
             }
         });
-
         this.context.closePath();
     
-        if (polygon.style.fill) {
-            this.context.fillStyle = polygon.style.color;
+        if (object.polygon.style.fill) {
+            this.context.fillStyle = object.polygon.style.color;
             this.context.fill();
         }
 
-        if(polygon.sprite !== undefined){
-            this.context.drawImage(polygon.sprite.image, position.x, position.y, polygon.size.x, polygon.size.y);
-        };
+        this.context.drawImage(object.activeSprite?.image, position.x, position.y, object.polygon.size.x, object.polygon.size.y);
 
-        if(polygon.style.stroke){
+        if(object.polygon.style.stroke){
             this.context.stroke();
         }
-    }
-
-    renderBackground(){
-        this.renderPolygon(this.background);
     }
 }
 

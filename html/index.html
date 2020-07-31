@@ -15,37 +15,22 @@
 
         .canvas-container {
             width: 100vw;
-            /* height: 100vh; */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background: purple;
-        }
-
-        #root {
-            width: 100vw;
-            height: 100vh;
-            background: #000;
-            color: #fff;
-        }
-
-        h1{
-            margin: 0;
         }
     </style>
 
 </head>
 
 <body>
-    <div class="canvas-container">
+    <div class="canvas-container" id="canvas-container">
         <canvas id='canvas' width='400' height='400'>
             Please use a browser that supports “canvas”
         </canvas>
     </div>
-    <div id='render'>
-        <img id='renderImg' src=''/>
-    </div>
-    <div id='root'></div>
 </body>
 
 </html>

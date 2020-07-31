@@ -7,7 +7,8 @@ module.exports = {
   devtool: "source-map",
   entry: './src/index.ts',
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
@@ -15,27 +16,21 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|jp2|webp)$/,
         loader: 'file-loader',
+        exclude: '/dist/',
+
       }
     ],
   },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
-  },
+  resolve: { extensions: ['.ts'] },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
-    new CopyWebpackPlugin({
-      patterns: [{
-        from: './src/scenes/sprites',
-        to: 'sprites'
-      }, ],
-    }),
-    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './html/index.html'
-    })
+    }),
+    new CleanWebpackPlugin()
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),

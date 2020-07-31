@@ -1,12 +1,13 @@
 import { GameObjectsList, GameObject } from './GameObjects';
+import { Point } from './Geometry2D';
 
 class ScenesList {
-    list: Scene[];
-    active: number;
+    list: Scene[] = [];
+    activeScene: number = 0;
+    active: Scene;
 
     constructor() {
-        this.list = [];
-        this.active = 0;
+        this.active = this.list[this.activeScene];
     }
 
     addScene(scene: Scene) {
@@ -14,7 +15,8 @@ class ScenesList {
     }
 
     setActive(sceneNumber: number) {
-        this.active = sceneNumber;
+        this.activeScene = sceneNumber;
+        this.active = this.list[sceneNumber];
     }
 }
 

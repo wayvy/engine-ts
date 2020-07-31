@@ -3,69 +3,42 @@ import { ScenesList } from './Scenes';
 import { Control } from './Control';
 import { Point } from './Geometry2D';
 
-import { dummyScene } from './scenes/dummy';
-import { axisScene, drawAxisX, drawAxisY } from './scenes/axis';
+import { demoScene } from './scenes/demo';
+import { playerObject } from './scenes/objects/playerObject';
 
 class Game {
-    canvas: Canvas2D;
-    scenes: ScenesList;
+    canvas: Canvas2D = new Canvas2D();
+    scenes: ScenesList = new ScenesList();
     control: Control;
 
     constructor() {
-        this.canvas = new Canvas2D();
-        this.scenes = new ScenesList();
-        this.control = new Control();
+        const playerSize = 64;
+        const playerPosition = new Point(this.canvas.size.x / 2 - playerSize / 2, this.canvas.size.y - playerObject.polygon.size.y);
+        playerObject.move(playerPosition);
+        demoScene.addObject(playerObject);
+        this.control = new Control(playerObject, this.canvas.camera);
 
-        this.control.listener();
-        // this.scenes.addScene(videoScene);
-        this.scenes.addScene(dummyScene);
-    
+
+        this.scenes.addScene(demoScene);
+        this.scenes.setActive(0);
+
         this.loop();
     }
 
-    loop() {
-        this.canvas.renderBackground();
-
-        if (this.control.keyboard.up.state) {
-            this.scenes.list[this.scenes.active].objects.list[5].move(new Point(0,-5));
-            this.canvas.camera.position.move(new Point(0, 5));
-        }
-
-        if (this.control.keyboard.down.state) {
-            this.scenes.list[this.scenes.active].objects.list[5].move(new Point(0,5));
-            this.canvas.camera.position.move(new Point(0, -5));
-        }
-
-        if (this.control.keyboard.left.state) {
-            this.scenes.list[this.scenes.active].objects.list[5].move(new Point(-5,0));
-            this.canvas.camera.position.move(new Point(5, 0));
-
-        }
-
-        if (this.control.keyboard.right.state) {
-            this.scenes.list[this.scenes.active].objects.list[5].move(new Point(5,0));
-            this.canvas.camera.position.move(new Point(-5, 0));
-        }
-
-        /* 
-        Рендер всех объектов в сцене
-        
-        TODO: 
-            * перенести в метод для ScenesList
-            * подумать: в SceneList.active хранить номер сцены или ссылку на сцену
-            * метод renderPolygon или renderObject ?
-        */
-
-        this.scenes.list[this.scenes.active].objects.list.map(object => {
+    render(){
+        this.scenes.active.objects.list.map(object => {
             const renderPosition = new Point(
                 object.position.x + this.canvas.camera.position.x,
                 object.position.y + this.canvas.camera.position.y
             );
-
-            this.canvas.renderPolygon(object.polygon, renderPosition);
+            this.canvas.renderObject(object, renderPosition);
         });
-        requestAnimationFrame(this.loop.bind(this));
+    }
 
+    loop() {
+        this.render();
+        requestAnimationFrame(() => this.loop());
+        this.control.action();
     }
 }
 

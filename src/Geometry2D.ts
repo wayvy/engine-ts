@@ -16,10 +16,6 @@ class Point {
 class PointsList {
     list: Point[] = [];
 
-    constructor() {
-        this.list = [];
-    }
-
     add(point: Point) {
         this.list.push(point);
     }
@@ -27,50 +23,30 @@ class PointsList {
 
 class PolygonStyle {
     fill: Boolean;
-    stroke: Boolean;
-    color: string;
+    stroke: Boolean = true;
+    color: string = 'red';
+
     constructor(isFill: Boolean){
         this.fill = isFill;
-        this.stroke = true;
-        this.color = 'red';
     }
 }
 
 class Polygon {
-    points: PointsList;
+    points: PointsList = new PointsList();
     size: Point;
     style: PolygonStyle;
-    sprite ? : Sprite;
     angle: number = 0;
+
     constructor(points: Point[], isFill: Boolean = false) {
         this.style = new PolygonStyle(isFill);
-        this.points = new PointsList();
-        points.map(point => this.points.add(point));
-
+        points.map(point => this.points.add(point)); // ?
         this.size = this.calculateSize();
     }
 
     calculateSize(){
-        /* 
-        TODO: Вычислить ширину && высоту фигуры
-        */
+        /* TODO */
         return new Point(64, 64);
     }
-
-    
-    
-    
-
-    setSprite(image: HTMLImageElement) {
-        this.sprite = new Sprite(image);
-    }
 }
 
-class Sprite {
-    image: HTMLImageElement;
-    constructor(image: HTMLImageElement) {
-        this.image = image;
-    }
-}
-
-export { Point, Polygon, Sprite }
+export { Point, Polygon }

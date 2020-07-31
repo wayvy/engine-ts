@@ -1,7 +1,7 @@
-import { Point, Polygon, Sprite } from '../../Geometry2D';
-import { GameObject } from '../../GameObjects';
+import { Point, Polygon } from '../../Geometry2D';
+import { GameObject, Sprite } from '../../GameObjects';
 
-import skyImage from '../sprites/sky/sky-00.png';
+import skyImageSrc from '../sprites/sky/sky-00.png';
 
 const squarePoints = (size: number) => [
     [0, 0],
@@ -11,21 +11,21 @@ const squarePoints = (size: number) => [
 ];
 
 const squareSize = 2048;
-const squarePointsGenerator = [
-    ...squarePoints(squareSize).map(xy => {
-        return new Point(xy[0], xy[1]);
-    })
-];
+const squarePointsGenerator = [ ...squarePoints(squareSize).map(xy => {
+    return new Point(xy[0], xy[1]);
+})];
 const skyPolygon = new Polygon(squarePointsGenerator);
 skyPolygon.size = new Point(squareSize, squareSize);
 skyPolygon.style.stroke = false;
 
-const skySprite = new Image();
-skySprite.src = skyImage;
-skySprite.width = squareSize;
-skySprite.height = squareSize;
-skyPolygon.setSprite(skySprite);
+const skyImage = new Image();
+skyImage.src = skyImageSrc;
+skyImage.width = squareSize;
+skyImage.height = squareSize;
+
+const skySprite = new Sprite(skyImage);
 
 const skyObject = new GameObject(skyPolygon, `sky-0`);
+skyObject.initSprite(skySprite);
 
 export { skyObject }

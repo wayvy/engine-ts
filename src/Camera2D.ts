@@ -1,4 +1,4 @@
-import { Point } from "./Geometry2D"
+import { Point } from "./Geometry2D";
 
 class Camera2D {
     name: string;
@@ -8,6 +8,7 @@ class Camera2D {
         this.name = name;
         this.position = new Point(0, 0);
     }
+
     move(distance: Point){
         this.position.move(distance);
     }
