@@ -8,7 +8,7 @@ class Physics {
                                     object0.position.y + object0.figure.size.y > object1.position.y;
 
         if(collideCondition){
-            console.log('collide!')
+            console.log('collide')
         }
     };
 }

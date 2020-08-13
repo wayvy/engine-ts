@@ -2,10 +2,13 @@ import { GameObject } from "./GameObjects";
 import { Point } from "./Geometry2D";
 import { Camera2D } from "./Camera2D";
 
+class AppGamepad{
+    gamepad? : Gamepad;
+}
+
 class Key {
     key: string;
     state: boolean;
-
     constructor(key: string) {
         this.key = key;
         this.state = false;
@@ -26,44 +29,49 @@ class Keyboard {
 
 class Control {
     keyboard = new Keyboard();
-    object?: GameObject;
+    gamepad?: Gamepad | null;
+    object: GameObject;
     camera?: Camera2D;
-
-    constructor(object?: GameObject, camera?: Camera2D) {
+    collideState: boolean = false;
+    constructor(object: GameObject) {
         this.object = object;
-        this.camera = camera;
+        this.gamepad = navigator.getGamepads()[0];
         this.listener();
     }
 
+    addCamera(camera: Camera2D){
+        this.camera = camera;
+    }
+
     action(){
-        let distance = 5;
-
+        let distance = 4;
         if (this.keyboard.left.state) {
+            this.object.sprites.active = this.object.sprites.run;
+            this.object.move(new Point(-distance,0));
             this.camera?.position.move(new Point(distance, 0));
-            this.object?.move(new Point(-distance,0));
         }
-
         if (this.keyboard.right.state) {
-            this.object?.move(new Point(distance,0));
+            this.object.sprites.active = this.object.sprites.run;
+            this.object.move(new Point(distance,0));
             this.camera?.position.move(new Point(-distance, 0));
         }
-
-        // if (this.keyboard.up.state) {
-        //     this.camera?.position.move(new Point(0, distance));
-        //     this.object?.move(new Point(0, -distance));
-        // }
-
-        // if (this.keyboard.down.state) {
-        //     this.object?.move(new Point(0, distance));
-        //     this.camera?.position.move(new Point(0, -distance));
-        // }
+        if (this.keyboard.arrowUp.state) {
+            this.object.sprites.active = this.object.sprites.punch;
+        } 
+        if(!this.keyboard.left.state && !this.keyboard.right.state && !this.keyboard.arrowUp.state) {
+            this.object.sprites.active = this.object.sprites.idle;
+        }
     }
 
     listener() {
-        document.addEventListener('keydown', event => this.keyDown(event, true));
-        document.addEventListener('keyup', event => this.keyDown(event, false));
+        window.addEventListener('keydown', event => this.keyDown(event, true));
+        window.addEventListener('keyup', event => this.keyDown(event, false));
+        window.addEventListener('gamepadconnected', event => {
+            this.gamepad = navigator.getGamepads()[0];
+            console.log(this.gamepad);
+        });
     }
-
+    
     keyDown(event: KeyboardEvent, isDown: boolean) {
         switch (event.key) {
             case this.keyboard.q.key:
@@ -100,4 +108,4 @@ class Control {
     }
 }
 
-export { Control };
+export { Control, AppGamepad };

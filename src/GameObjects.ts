@@ -6,9 +6,6 @@ import { List } from "./List";
 const physics = new Physics();
 
 class GameObjectsList extends List<GameObject>{
-    // addObject(object: GameObject) {
-    //     this.list.push(object);
-    // }
     collider(player: GameObject){
         this.list.map(object => {
             if(object.name !== player.name && object.name !== 'sky-0'){
@@ -18,33 +15,36 @@ class GameObjectsList extends List<GameObject>{
     }
 }
 
-
 class GameObject {
     name: string;
     figure: Polygon;
     position: Point;
-    activeSprite ? : Sprite;
-    spriteList ? : SpriteList;
+    active: number = 0;
+    sprites: Sprites = new Sprites();
     events: EventsList = new EventsList();
-    
     constructor(figure: Polygon | Rectangle, name: string) {
         this.figure = figure;
         this.name = name;
         this.position = new Point(0, 0);
     }
 
-    move(position: Point){
-        this.position.x = this.position.x + position.x;
-        this.position.y = this.position.y + position.y;
-    }
-
-    initSprite(sprite: Sprite){
-        this.spriteList = new SpriteList(sprite);
-        this.setActiveSprite(0);
+    move(distance: Point){
+        this.position.x = this.position.x + distance.x;
+        this.position.y = this.position.y + distance.y;
     }
 
     setActiveSprite(index: number) {
-        this.activeSprite = this.spriteList?.list[index];
+        this.active = index;
+    }
+}
+
+class Sprites {
+    active: SpriteList;
+    idle: SpriteList = new SpriteList();
+    run: SpriteList = new SpriteList();
+    punch: SpriteList = new SpriteList();
+    constructor(){
+        this.active = this.idle;
     }
 }
 
@@ -55,15 +55,8 @@ class Sprite {
     }
 }
 
-class SpriteList {
-    list: Sprite[] = [];
-    constructor(sprite: Sprite) {
-        this.list.push(sprite);
-    }
-
-    add(sprite: Sprite) {
-        this.list.push(sprite);
-    }
+class SpriteList extends List<Sprite> {
+    active: number = 0;
 }
 
-export { GameObject, GameObjectsList, Sprite };
+export { GameObject, GameObjectsList, Sprite, SpriteList };

@@ -1,46 +1,48 @@
 import { Canvas2D } from './Canvas2D';
 import { ScenesList } from './Scenes';
-import { Control } from './Control';
+import { Control, AppGamepad } from './Control';
 import { Point } from './Geometry2D';
+import { GameObject } from './GameObjects';
 
-import { demoScene } from './scenes/demo';
-import { playerObject } from './scenes/objects/playerObject';
+import { ant0Scene } from './scenes/ant-0';
+import { antObject } from './scenes/objects/antObject';
 
 class Game {
     canvas: Canvas2D = new Canvas2D();
     scenes: ScenesList = new ScenesList();
-    control: Control;
-
+    control: Control = new Control(antObject);
+    lastRender: number = Date.now();
     constructor() {
-        const playerSize = 64;
-        const playerPosition = new Point(this.canvas.size.x / 2 - playerSize / 2, this.canvas.size.y - playerObject.figure.size.y);
-        // const playerPosition = new Point(0, this.canvas.size.y - playerObject.figure.size.y);
-        playerObject.move(playerPosition);
-        demoScene.addObject(playerObject);
-        this.control = new Control(playerObject, this.canvas.camera);
-
-
-        this.scenes.addScene(demoScene);
+        this.control.addCamera(this.canvas.camera);
+        antObject.move(new Point(0, this.canvas.size.y - antObject.figure.size.y));
+        ant0Scene.addControlObject(antObject);
+        this.scenes.addScene(ant0Scene);
         this.scenes.setActive(0);
-
         this.loop();
     }
 
+    renderPosition(object: GameObject): Point{
+        return new Point(
+            object.position.x + this.canvas.camera.position.x,
+            object.position.y + this.canvas.camera.position.y
+        );
+    }
+
     render(){
-        this.scenes.active.objects.list.map(object => {
-            const renderPosition = new Point(
-                object.position.x + this.canvas.camera.position.x,
-                object.position.y + this.canvas.camera.position.y
-            );
-            this.canvas.renderObject(object, renderPosition);
-        });
+        this.canvas.renderObject(this.scenes.active.background, this.renderPosition(this.scenes.active.background));
+        this.canvas.renderObject(this.scenes.active.controlObject, this.renderPosition(this.scenes.active.controlObject));
+        this.scenes.active.objects.list.map(object => this.canvas.renderObject(object, this.renderPosition(object)));
     }
 
     loop() {
         this.render();
         requestAnimationFrame(() => this.loop());
         this.control.action();
-        this.scenes.active.objects.collider(this.scenes.active.objects.list[this.scenes.active.objects.list.length - 1]);
+        if(Date.now() - this.lastRender > 100){
+            this.scenes.active.events.idle(this.control.object);
+            this.scenes.active.events.idle(this.scenes.active.objects.list[3]);
+            this.lastRender = Date.now();
+        }
     }
 }
 

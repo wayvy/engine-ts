@@ -2,6 +2,7 @@ import { Point, Rectangle } from '../../Geometry2D';
 import { GameObject, Sprite } from '../../GameObjects';
 
 import skyImageSrc from '../sprites/sky/sky-00.png';
+import { spriteGenerator } from '../tools/spriteGenerator';
 
 const squarePoints = (size: number) => [
     [0, 0],
@@ -17,17 +18,12 @@ const squarePointsGenerator = [ ...squarePoints(squareSize).map(xy => {
 const skyPolygon = new Rectangle(squarePointsGenerator);
 skyPolygon.size = new Point(squareSize, squareSize);
 skyPolygon.style.stroke = true;
-skyPolygon.style.color = 'pink';
+skyPolygon.style.color = 'blue';
 skyPolygon.style.fill = true;
 
-const skyImage = new Image();
-skyImage.src = skyImageSrc;
-skyImage.width = squareSize;
-skyImage.height = squareSize;
-
-const skySprite = new Sprite(skyImage);
-
 const skyObject = new GameObject(skyPolygon, `sky-0`);
-skyObject.initSprite(skySprite);
+
+const sprite = spriteGenerator(skyImageSrc);
+skyObject.sprites.idle.add(sprite);
 
 export { skyObject }

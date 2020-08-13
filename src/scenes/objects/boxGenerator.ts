@@ -2,16 +2,12 @@ import { Point, Rectangle } from "../../Geometry2D";
 import { Sprite, GameObject } from "../../GameObjects";
 import { Scene } from "../../Scenes";
 
+import { squarePoints } from '../tools/pointsGenerator';
+
 import boxImageSrc0 from '../sprites/boxes/box.png';
+import { spriteGenerator } from "../tools/spriteGenerator";
 
 const boxGenerator = (scene: Scene, size: Point, position: Point) => {
-    const squarePoints = (size: number) => [
-        [0, 0],
-        [0, size],
-        [size, size],
-        [size, 0]
-    ];
-    
     const rowBox = (position: Point, size: number, n: number) => {
         for (let i = 0; i < n; i++) {
             const squarePointsGenerator = [
@@ -20,16 +16,15 @@ const boxGenerator = (scene: Scene, size: Point, position: Point) => {
                 })
             ];
         
-            const square = new Rectangle(squarePointsGenerator, true);
+            const square = new Rectangle(squarePointsGenerator);
             square.size = new Point(size, size);
-            square.style.stroke = false;
-        
-            const boxImage = new Image();
-            boxImage.src = boxImageSrc0;
-            const boxSprite = new Sprite(boxImage);
+            square.style.stroke = true;
+            square.style.fill = false;
+
             
             const squareObject = new GameObject(square, `n-${n}--${size}--${i}`);
-            squareObject.initSprite(boxSprite);
+            const sprite = spriteGenerator(boxImageSrc0);
+            squareObject.sprites.idle.add(sprite);
             
             const newSquarePosition = new Point(position.x + size * i, position.y);
             squareObject.move(newSquarePosition);
